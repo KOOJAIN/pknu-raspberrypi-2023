@@ -17,8 +17,6 @@ GPIO.output(blue, True) # 여기까지 초기화
 
 try:
     while True:
-        
-
         GPIO.output(red, False) # 현실에서는 Red가 on 됨
         GPIO.output(green, True)
         GPIO.output(blue, True)
@@ -29,7 +27,10 @@ try:
         time.sleep(1)
         GPIO.output(red, True)
         GPIO.output(green, True)
-        GPIO.output(blue, False)# 현실에서는 blue가 on 됨
+        GPIO.output(blue, GPIO.LOW)# 현실에서는 blue가 on 됨
         time.sleep(1)
 except KeyboardInterrupt:
+    GPIO.output(red, GPIO.HIGH)
+    GPIO.output(green, GPIO.HIGH)
+    GPIO.output(blue, GPIO.HIGH)
     GPIO.cleanup()
