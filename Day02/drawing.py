@@ -4,6 +4,8 @@ import pygame, sys
 width, height = 500, 500
 radius = 10
 mX, mY = 0, 0
+.0
+
 
 pygame.init()
 wnd = pygame.display.set_mode((width, height))
