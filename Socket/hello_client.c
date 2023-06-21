@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 void error_handling(char *message);
+
 int main(int argc, char* argv[])
 {
 	int sock;
@@ -26,7 +27,7 @@ int main(int argc, char* argv[])
 	serv_addr.sin_addr.s_addr=inet_addr(argv[1]);
 	serv_addr.sin_port=htons(atoi(argv[2]));
 
-	if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr))==1)
+	if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr))==-1)
 		error_handling("connect() error!");
 
 	str_len=read(sock, message, sizeof(message)-1);
@@ -41,6 +42,6 @@ int main(int argc, char* argv[])
 void error_handling(char *message)
 {
 	fputs(message, stderr);
-	fputc('\n', stderr);
+	fputc('\n', stddrr);
 	exit(1);
 }

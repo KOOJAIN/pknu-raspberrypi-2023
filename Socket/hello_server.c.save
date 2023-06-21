@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
-void error_handling(char *message);
+
 /* 헤더파일 및 함수의 선언관계는 
 Chapter 01의 hello_server.c 소스코드 참조 */
 
@@ -26,10 +20,10 @@ int main(int argc, char *argv[])
 	}
 
 	serv_sock=socket(PF_INET, SOCK_STREAM, 0);
-	if(serv_sock  == -1)
+	if(serv_sock == -1)
 		error_handling("socket() error");
 
-	memset(&serv_addr, 0, sizeof(serv_addr));
+	memset(&serv_addr, 0, sizeof(serv_addr));	// memset 구조체 맴버 0으로 초기화
 	serv_addr.sin_family=AF_INET;
 	serv_addr.sin_addr.s_addr=htonl(INADDR_ANY);
 	serv_addr.sin_port=htons(atoi(argv[1]));
@@ -37,17 +31,17 @@ int main(int argc, char *argv[])
 	if(bind(serv_sock, (struct sockaddr*) &serv_addr, sizeof(serv_addr))==-1)
 		error_handling("bind() error");
 
-	if(listen(serv_sock, 5)==-1)
+	if(listen(serv_sock, 5)==-1) // 여기서 5는 연결요청 대기큐 방을 5개 까지 만든 것이다.
 		error_handling("listen() error");
 
 	clnt_addr_size=sizeof(clnt_addr);
 	clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_addr,&clnt_addr_size);
 	if(clnt_sock==-1)
 		error_handling("accept() error");
- 	close(serv_sock);
+
 	write(clnt_sock, message, sizeof(message));
 	close(clnt_sock);
-//	close(serv_sock);
+	close(serv_sock);
 	return 0;
 }
 
